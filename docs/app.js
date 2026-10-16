@@ -49,12 +49,13 @@ async function boot() {
   catch { $('#loading').textContent = '缺少 data/meta.json —— 请先在本机运行 sync.js'; return; }
 
   if (!meta.encrypted) {
-    try { S = await (await fetch('data/data.json', { cache: 'no-store' })).json(); }
+    try { S = await (await fetch('data/data.json?r=' + Date.now(), { cache: 'no-store' })).json(); }
     catch { $('#loading').textContent = '缺少 data/data.json'; return; }
     return start();
   }
 
-  const res = await fetch('data/data.enc', { cache: 'no-store' });
+  // 随机参数穿透 CDN/浏览器缓存，保证拿到与最新口令匹配的数据
+  const res = await fetch('data/data.enc?r=' + Date.now(), { cache: 'no-store' });
   const blob = await res.text();
   const hash = await sha256hex(blob);
   // 命中缓存则免输口令
@@ -65,6 +66,10 @@ async function boot() {
 
   $('#loading').hidden = true;
   const gate = $('#gate'); gate.hidden = false;
+  if (meta.syncedAt) {
+    const el = $('#gateVer');
+    if (el) el.textContent = '数据版本：同步于 ' + fms(meta.syncedAt) + '（应为近期时间；若是很久以前说明缓存了旧页面，请强制刷新）';
+  }
   const tryUnlock = async () => {
     $('#gateErr').textContent = '';
     const pass = $('#pass').value.trim();
