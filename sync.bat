@@ -1,31 +1,30 @@
 @echo off
-rem 盯盯车面板：同步数据并推送到 GitHub
-rem 用法：sync.bat        只同步
-rem       sync.bat push   同步后提交并推送 docs/data
-chcp 65001 >nul
+rem SurCam dashboard: sync data and optionally push to GitHub
+rem usage:  sync.bat         sync only
+rem         sync.bat push    sync then git commit+push docs/data
 cd /d "%~dp0"
 
-echo [1/3] 同步 SurCam 数据（只读 GET）...
+echo [1/3] syncing SurCam data (read-only GET)...
 node sync.js
 if errorlevel 1 (
   echo.
-  echo 同步失败。若是 token 过期，请先运行 ..\autosign\refresh_token.bat 刷新后再试。
+  echo sync failed. if token expired, run ..\autosign\refresh_token.bat first.
   pause
   exit /b 1
 )
 
 if /i "%1"=="push" (
-  echo [2/3] 提交数据变更...
+  echo [2/3] committing data...
   git add docs\data
   git diff --cached --quiet docs\data
   if errorlevel 1 (
     git commit -m "data: sync %date% %time%"
-    echo [3/3] 推送...
+    echo [3/3] pushing...
     git push
   ) else (
-    echo [2/3] 数据无变化，跳过提交
+    echo [2/3] no data change, skip commit
   )
 ) else (
-  echo [2/3] 未指定 push，跳过 git 提交
+  echo [2/3] push not requested, skip git
 )
-echo 完成。
+echo done.
