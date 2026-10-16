@@ -1,0 +1,13 @@
+{
+  "name": "surcam-webviewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lk盯盯车(SurCam) 只读数据同步 + GitHub Pages 静态面板",
+  "scripts": {
+    "sync": "node sync.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1116">
+<title>盯盯车数据面板</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="gate" hidden>
+  <div class="logo">🚗</div>
+  <h1>盯盯车数据面板</h1>
+  <p>数据已加密存储在 GitHub 仓库中<br>请输入同步时设置的口令解锁</p>
+  <input id="pass" type="password" placeholder="输入解密口令" autocomplete="off">
+  <button id="unlock">解锁</button>
+  <div class="err" id="gateErr"></div>
+</div>
+
+<div id="loading">正在加载数据…</div>
+
+<div id="app" hidden>
+  <header>
+    <div class="row1">
+      <div class="title"><span class="dot" id="liveDot"></span><span id="vName">—</span></div>
+      <div class="sync" id="syncTime"></div>
+    </div>
+    <div class="vtabs" id="vtabs" hidden></div>
+  </header>
+
+  <main>
+    <!-- 车况 -->
+    <section class="card" id="statusCard">
+      <h2>车辆状况 <span class="more" id="realtimeAt"></span></h2>
+      <div class="hero" id="hero"></div>
+    </section>
+
+    <!-- 权益 -->
+    <section class="card">
+      <h2>账号与权益</h2>
+      <div class="grid2" id="entGrid"></div>
+    </section>
+
+    <!-- 汇总 + 图表 -->
+    <section class="card">
+      <h2>行程汇总 <span class="more" id="rangeInfo"></span></h2>
+      <div class="seg" id="rangeSeg">
+        <button data-r="today">今日</button>
+        <button data-r="7" class="on">近7天</button>
+        <button data-r="30">近30天</button>
+        <button data-r="all">全部</button>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="kpis2" id="kpis2"></div>
+    </section>
+
+    <section class="card">
+      <h2>每日里程 <span class="more">近30天</span></h2>
+      <div id="chartKm"></div>
+      <div class="caption" id="capKm">点击柱子查看当日明细</div>
+    </section>
+
+    <section class="card">
+      <h2>能耗趋势 <span class="more">百公里加权</span></h2>
+      <div id="chartEnergy"></div>
+      <div class="legend" id="legEnergy"></div>
+      <div class="caption" id="capEnergy">点击数据点查看当日数值</div>
+    </section>
+
+    <section class="card">
+      <h2>达成率 <span class="more">驾驶表现</span></h2>
+      <div id="chartRate"></div>
+      <div class="caption" id="capRate">点击数据点查看当日达成率</div>
+    </section>
+
+    <section class="card">
+      <h2>月度费用 <span class="more">电 / 油 / 过路</span></h2>
+      <div id="chartCost"></div>
+      <div class="legend" id="legCost"></div>
+      <div class="caption" id="capCost">点击月份查看构成</div>
+    </section>
+
+    <section class="card">
+      <h2>本月日历 <span class="more" id="calMonth"></span></h2>
+      <div class="cal" id="cal"></div>
+      <div class="caption" id="capCal">色深代表当日里程</div>
+    </section>
+
+    <!-- 行程 -->
+    <section class="card">
+      <h2>行程记录 <span class="more" id="tripCount"></span></h2>
+      <div id="trips"></div>
+    </section>
+
+    <!-- 其他 -->
+    <section class="card">
+      <h2>使用时长日志</h2>
+      <div class="rows" id="durationLogs"></div>
+    </section>
+
+    <section class="card">
+      <h2>订阅码 / 授权码</h2>
+      <div class="rows" id="codes"></div>
+    </section>
+
+    <section class="card">
+      <h2>积分与 RT 额度流水</h2>
+      <div class="rows" id="ledgers"></div>
+    </section>
+
+    <section class="card">
+      <h2>围栏与哨兵</h2>
+      <div class="rows" id="fences"></div>
+    </section>
+
+    <section class="card">
+      <h2>竞赛与荣誉</h2>
+      <div class="rows" id="comp"></div>
+    </section>
+
+    <section class="card">
+      <h2>通知 <span class="more" id="unread"></span></h2>
+      <div class="rows" id="notifs"></div>
+    </section>
+
+    <footer>
+      <div id="coverage"></div>
+      <div>只读快照 · 数据来自本机 sync.js 同步 · 服务端不感知本页面</div>
+      <div class="btns">
+        <button id="btnReload">刷新数据</button>
+        <button id="btnLock">锁定 / 换口令</button>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

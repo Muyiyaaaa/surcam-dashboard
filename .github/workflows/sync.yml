@@ -1,0 +1,38 @@
+# 可选：GitHub Actions 定时同步（不需要电脑开机）
+# 注意：token 是 3 天有效期的 JWT，Actions 模式需要每 3 天内手动更新一次
+#       仓库 secret 里的 SURCAM_TOKEN，日常建议用本机 sync.bat 模式。
+# 若启用：仓库 Settings → Secrets and variables → Actions → 添加 SURCAM_TOKEN（和 SURCAM_PASS 加密口令）
+name: sync
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "30 0 * * *" # 每天北京时间 08:30
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run sync
+        env:
+          SURCAM_TOKEN: ${{ secrets.SURCAM_TOKEN }}
+          SURCAM_PASS: ${{ secrets.SURCAM_PASS }}
+        run: node sync.js
+      - name: Commit data
+        run: |
+          git config user.name "sync-bot"
+          git config user.email "sync-bot@users.noreply.github.com"
+          git add docs/data
+          git diff --cached --quiet docs/data && echo "no changes" && exit 0
+          git commit -m "data: sync $(date -u +'%F %T')"
+          git push

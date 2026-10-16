@@ -1,0 +1,13 @@
+{
+  "tokenFile": "../autosign/token.txt",
+  "base": "https://car.sunslin.com",
+
+  "encrypt": true,
+  "passphrase": "改成你自己的长口令-用于加密推送到GitHub的数据",
+
+  "maxDays": 400,
+  "tripDetails": true,
+  "tripCostDetail": true,
+  "includeNotifications": true,
+  "requestDelayMs": 150
+}
