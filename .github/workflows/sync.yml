@@ -5,8 +5,9 @@
 name: sync
 on:
   workflow_dispatch: {}
-  schedule:
-    - cron: "30 0 * * *" # 每天北京时间 08:30
+  # 启用定时：配好 SURCAM_TOKEN/SURCAM_PASS 两个 secret 后，取消下面两行注释并推送
+  # schedule:
+  #   - cron: "30 0 * * *" # 每天北京时间 08:30
 
 permissions:
   contents: write
