@@ -15,9 +15,14 @@
   <div class="logo">🚗</div>
   <h1>盯盯车数据面板</h1>
   <p>数据已加密存储在 GitHub 仓库中<br>请输入同步时设置的口令解锁</p>
-  <input id="pass" type="password" placeholder="输入解密口令" autocomplete="off">
+  <div class="passwrap">
+    <input id="pass" type="password" placeholder="输入解密口令" autocomplete="off"
+           autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+    <button id="eye" type="button" title="显示/隐藏口令">👁</button>
+  </div>
   <button id="unlock">解锁</button>
   <div class="err" id="gateErr"></div>
+  <p class="tip">点击 👁 可查看输入内容 · 解密约需 1~3 秒<br>若反复失败，请用系统浏览器（Safari / Chrome）打开，勿用微信内置浏览器</p>
 </div>
 
 <div id="loading">正在加载数据…</div>

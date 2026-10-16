@@ -32,11 +32,17 @@ a { color: var(--accent2); }
 #gate .logo { font-size: 44px; }
 #gate h1 { margin: 0; font-size: 20px; }
 #gate p { margin: 0; color: var(--dim); font-size: 13px; text-align: center; }
-#gate input {
-  width: 100%; max-width: 320px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line);
+#gate .passwrap { position: relative; width: 100%; max-width: 320px; }
+#gate .passwrap input {
+  width: 100%; padding: 12px 44px 12px 14px; border-radius: 10px; border: 1px solid var(--line);
   background: var(--card); color: var(--txt); font-size: 16px; text-align: center; outline: none;
 }
-#gate input:focus { border-color: var(--accent); }
+#gate .passwrap input:focus { border-color: var(--accent); }
+#gate #eye {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  background: none; border: 0; font-size: 18px; color: var(--dim); cursor: pointer; padding: 6px;
+}
+#gate .tip { font-size: 11px; color: var(--faint); max-width: 320px; }
 #gate button {
   padding: 12px 28px; border-radius: 10px; border: 0; background: var(--accent); color: #08240f;
   font-size: 15px; font-weight: 600; cursor: pointer;

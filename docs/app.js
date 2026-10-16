@@ -67,8 +67,12 @@ async function boot() {
   const gate = $('#gate'); gate.hidden = false;
   const tryUnlock = async () => {
     $('#gateErr').textContent = '';
-    const pass = $('#pass').value;
+    const pass = $('#pass').value.trim();
     if (!pass) return;
+    if (!(window.crypto && window.crypto.subtle)) {
+      $('#gateErr').textContent = '此浏览器不支持网页加密：请用系统浏览器（Safari / Chrome）打开本页，不要用微信内置浏览器';
+      return;
+    }
     $('#unlock').textContent = '解密中…';
     try {
       const json = await decryptBlob(pass, blob);
@@ -76,11 +80,12 @@ async function boot() {
       if (json.length < 2000000) localStorage.setItem('surcam_cache', JSON.stringify({ h: hash, d: json }));
       gate.hidden = true; start();
     } catch {
-      $('#gateErr').textContent = '口令错误或数据损坏，请重试';
+      $('#gateErr').textContent = '口令不正确：请点 👁 核对输入（注意大小写，前后不能有空格）';
     } finally { $('#unlock').textContent = '解锁'; }
   };
   $('#unlock').onclick = tryUnlock;
   $('#pass').onkeydown = (e) => { if (e.key === 'Enter') tryUnlock(); };
+  $('#eye').onclick = () => { const p = $('#pass'); p.type = p.type === 'password' ? 'text' : 'password'; };
   $('#pass').focus();
 }
 
