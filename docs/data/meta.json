@@ -1,10 +1,10 @@
 {
   "v": 1,
-  "syncedAt": 1794134443184,
+  "syncedAt": 1794186603252,
   "encrypted": true,
   "vehicles": 1,
-  "trips": 22,
+  "trips": 17,
   "details": 22,
-  "bytes": 293190,
+  "bytes": 284775,
   "failures": []
 }
